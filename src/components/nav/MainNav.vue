@@ -1,6 +1,6 @@
 <template>
-  <header class="w-full text-sm">
-    <div class="fixed left-0 top-0 h-16 w-full bg-white text-black">
+  <header :class="['w-full', 'text-sm', headerHeightClass]">
+    <div class="fixed left-0 top-0 h-16 w-full bg-white">
       <div
         class="mx-auto flex h-full flex-nowrap border-b border-solid border-brand-gray-1 px-8"
       >
@@ -28,26 +28,26 @@
         </div>
       </div>
 
-  <sub-nav v-if="isLoggedIn"/>
+      <the-subnav v-if="isLoggedIn" />
     </div>
   </header>
 </template>
 
 <script>
-import ActionButton from "@/components/button/ActionButton.vue";
-import ProfileImage from "@/components/profileImage/ProfileImage.vue";
-import SubNav from "@/components/subNav/SubNav.vue";
+import ActionButton from "@/components/ActionButton.vue";
+import ProfileImage from "@/components/ProfileImage.vue";
+import TheSubnav from "@/components/TheSubnav.vue";
 
 export default {
   name: "MainNav",
   components: {
     ActionButton,
     ProfileImage,
-    SubNav
+    TheSubnav,
   },
   data() {
     return {
-      company: "New Careers",
+      company: "Bobo Careers",
       url: "https://careers.google.com",
       menuItems: [
         "Teams",
@@ -59,6 +59,14 @@ export default {
       ],
       isLoggedIn: false,
     };
+  },
+  computed: {
+    headerHeightClass() {
+      return {
+        "h-16": !this.isLoggedIn,
+        "h-32": this.isLoggedIn,
+      };
+    },
   },
   methods: {
     loginUser() {
