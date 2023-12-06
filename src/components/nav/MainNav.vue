@@ -1,6 +1,6 @@
 <template>
   <header class="w-full text-sm">
-    <div class="fixed left-0 top-0 h-16 w-full bg-white">
+    <div class="fixed left-0 top-0 h-16 w-full bg-white text-black">
       <div
         class="mx-auto flex h-full flex-nowrap border-b border-solid border-brand-gray-1 px-8"
       >
@@ -27,6 +27,8 @@
           <action-button v-else text="Sign in" @click="loginUser" />
         </div>
       </div>
+
+  <sub-nav v-if="isLoggedIn"/>
     </div>
   </header>
 </template>
@@ -34,12 +36,14 @@
 <script>
 import ActionButton from "@/components/button/ActionButton.vue";
 import ProfileImage from "@/components/profileImage/ProfileImage.vue";
+import SubNav from "@/components/subNav/SubNav.vue";
 
 export default {
   name: "MainNav",
   components: {
     ActionButton,
     ProfileImage,
+    SubNav
   },
   data() {
     return {
