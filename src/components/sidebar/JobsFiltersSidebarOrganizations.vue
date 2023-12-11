@@ -1,39 +1,51 @@
 <template>
-    <collapsible-accordion header="Organizations">
-      <div class="mt-5">
-        <fieldset>
-          <ul class="flex flex-row flex-wrap">
-            <li class="h-8 w-1/2">
-              <input id="VueTube" type="checkbox" class="mr-3" />
-              <label for="VueTube">VueTube</label>
-            </li>
-  
-            <li class="h-8 w-1/2">
-              <input id="Between Vue and Me" type="checkbox" class="mr-3" />
-              <label for="Between Vue and Me">Between Vue</label>
-            </li>
-  
-            <li class="h-8 w-1/2">
-              <input id="Et Vue Brute" type="checkbox" class="mr-3" />
-              <label for="Et Vue Brute">Et Vue Brute</label>
-            </li>
-  
-            <li class="h-8 w-1/2">
-              <input id="Vue and a Half Men" type="checkbox" class="mr-3" />
-              <label for="Vue and a Half Men">Vue and a Half Men</label>
-            </li>
-          </ul>
-        </fieldset>
-      </div>
-    </collapsible-accordion>
-  </template>
-  
-  <script>
-  import CollapsibleAccordion from "@/components/shared/CollapsibleAccordion.vue";
-  
-  export default {
-    name: "JobFiltersSidebarOrganizations",
-    components: { CollapsibleAccordion },
-  };
-  </script>
-  
+  <collapsible-accordion :header="header">
+    <div class="mt-5">
+      <fieldset>
+        <ul class="flex flex-row flex-wrap">
+          <li v-for="value in uniqueValues" :key="value" class="h-8 w-1/2">
+            <input
+              :id="value"
+              v-model="selectedValues"
+              :value="value"
+              type="checkbox"
+              class="mr-3"
+              @change="selectValue"
+            />
+            <label :for="value">{{ value }}</label>
+          </li>
+        </ul>
+      </fieldset>
+    </div>
+  </collapsible-accordion>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+import CollapsibleAccordion from "@/components/shared/CollapsibleAccordion.vue";
+
+const props = defineProps({
+  header: {
+    type: String,
+    required: true,
+  },
+  uniqueValues: {
+    type: Set,
+    required: true,
+  },
+  action: {
+    type: Function,
+    required: true,
+  },
+});
+
+const selectedValues = ref([]);
+const router = useRouter();
+
+const selectValue = () => {
+  props.action(selectedValues.value);
+  router.push({ name: "JobResults" });
+};
+</script>

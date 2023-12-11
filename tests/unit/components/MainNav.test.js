@@ -1,14 +1,26 @@
 import { render, screen } from "@testing-library/vue";
 import userEvent from "@testing-library/user-event";
+import { RouterLinkStub } from "@vue/test-utils";
+import { createTestingPinia } from "@pinia/testing";
+
+import { useRoute } from "vue-router";
+vi.mock("vue-router");
 
 import MainNav from "@/components/nav/MainNav.vue";
+import { useUserStore } from "@/stores/user";
 
 describe("MainNav", () => {
   const renderMainNav = () => {
+    useRoute.mockReturnValue({ name: "Home" });
+
+    const pinia = createTestingPinia();
+
     render(MainNav, {
       global: {
+        plugins: [pinia],
         stubs: {
           FontAwesomeIcon: true,
+          RouterLink: RouterLinkStub,
         },
       },
     });
@@ -29,7 +41,7 @@ describe("MainNav", () => {
     expect(navigationMenuTexts).toEqual([
       "Teams",
       "Locations",
-      "Life at New Careers",
+      "Life at Bobo Corp",
       "How we hire",
       "Students",
       "Jobs",
@@ -39,6 +51,7 @@ describe("MainNav", () => {
   describe("when the user logs in", () => {
     it("displays user profile picture", async () => {
       renderMainNav();
+      const userStore = useUserStore();
 
       let profileImage = screen.queryByRole("img", {
         name: /user profile image/i,
@@ -48,6 +61,7 @@ describe("MainNav", () => {
       const loginButton = screen.getByRole("button", {
         name: /sign in/i,
       });
+      userStore.isLoggedIn = true;
       await userEvent.click(loginButton);
 
       profileImage = screen.getByRole("img", {
