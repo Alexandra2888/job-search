@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/vue";
 import userEvent from "@testing-library/user-event";
 
-import MainNav from "@/components/MainNav.vue";
+import MainNav from "@/components/nav/MainNav.vue";
 
 describe("MainNav", () => {
   const renderMainNav = () => {
@@ -16,7 +16,7 @@ describe("MainNav", () => {
 
   it("displays company name", () => {
     renderMainNav();
-    const companyName = screen.getByText("Bobo Careers");
+    const companyName = screen.getByText("New Careers");
     expect(companyName).toBeInTheDocument();
   });
 
@@ -29,7 +29,7 @@ describe("MainNav", () => {
     expect(navigationMenuTexts).toEqual([
       "Teams",
       "Locations",
-      "Life at Bobo Corp",
+      "Life at New Careers",
       "How we hire",
       "Students",
       "Jobs",

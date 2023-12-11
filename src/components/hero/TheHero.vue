@@ -4,6 +4,7 @@
       <div class="grid grid-cols-12">
         <div class="col-span-5 col-start-2">
           <the-headline />
+          <job-search-form/>
         </div>
       </div>
     </section>
@@ -11,12 +12,14 @@
 </template>
 
 <script>
-import TheHeadline from "@/components/TheHeadline.vue";
+import TheHeadline from "@/components/headline/TheHeadline.vue";
+import JobSearchForm from "@/components/form/JobSearchform.vue"
 
 export default {
   name: "TheHero",
   components: {
     TheHeadline,
+    JobSearchForm
   },
 };
 </script>
