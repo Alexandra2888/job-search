@@ -7,7 +7,7 @@
         <router-link
           :to="{ name: 'Home' }"
           class="flex h-full items-center text-xl"
-          >Bobo Careers
+          >New Careers
         </router-link>
 
         <nav class="ml-12 h-full">
@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       menuItems: [
-        { text: "Teams", url: "/" },
+        { text: "Teams", url: "/teams" },
         { text: "Locations", url: "/" },
         { text: "Life at New Careers", url: "/" },
         { text: "How we hire", url: "/" },
