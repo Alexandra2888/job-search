@@ -4,20 +4,20 @@
       <div
         class="mx-auto flex h-full flex-nowrap border-b border-solid border-brand-gray-1 px-8"
       >
-      <router-link
+        <router-link
           :to="{ name: 'Home' }"
           class="flex h-full items-center text-xl"
-          >New Careers
+          >Bobo Careers
         </router-link>
 
         <nav class="ml-12 h-full">
           <ul class="flex h-full list-none">
             <li
               v-for="menuItem in menuItems"
-              :key="menuItem"
+              :key="menuItem.text"
               class="ml-9 h-full first:ml-0"
             >
-            <router-link
+              <router-link
                 :to="menuItem.url"
                 class="flex h-full items-center py-2.5"
                 >{{ menuItem.text }}</router-link
@@ -37,7 +37,10 @@
   </header>
 </template>
 
+
 <script>
+import { mapActions, mapState } from "pinia";
+import { useUserStore } from "@/stores/user";
 import ActionButton from "@/components/button/ActionButton.vue";
 import ProfileImage from "@/components/profileImage/ProfileImage.vue";
 import TheSubnav from "@/components/subnav/TheSubnav.vue";
@@ -51,20 +54,18 @@ export default {
   },
   data() {
     return {
-      company: "New Careers",
-      url: "https://careers.google.com",
       menuItems: [
-      { text: "Teams", url: "/" },
+        { text: "Teams", url: "/" },
         { text: "Locations", url: "/" },
         { text: "Life at New Careers", url: "/" },
         { text: "How we hire", url: "/" },
         { text: "Students", url: "/" },
         { text: "Jobs", url: "/jobs/results" },
       ],
-      isLoggedIn: false,
     };
   },
-  computed: {
+  computed: { 
+    ...mapState(useUserStore, ["isLoggedIn"]),
     headerHeightClass() {
       return {
         "h-16": !this.isLoggedIn,
@@ -73,9 +74,7 @@ export default {
     },
   },
   methods: {
-    loginUser() {
-      this.isLoggedIn = true;
-    },
+    ...mapActions(useUserStore, ["loginUser"]),
   },
 };
 </script>
